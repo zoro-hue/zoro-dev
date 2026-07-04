@@ -2897,7 +2897,7 @@
 
     .work-head {
       position: absolute;
-      top: 3.5vh;
+      top: 2vh;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
@@ -2909,9 +2909,9 @@
 
     .work-cards-track-wrap {
       position: absolute;
-      top: 22vh;
+      top: 24vh;
       width: 100%;
-      height: 72vh;
+      height: 70vh;
       overflow: hidden;
     }
 
@@ -3083,7 +3083,7 @@
 
     @media (max-width: 991px) {
       .work-head {
-        top: 2vh;
+        top: 1.5vh;
         left: 50%;
         transform: translateX(-50%);
         text-align: center;
@@ -3091,8 +3091,8 @@
         padding: 0;
       }
       .work-cards-track-wrap {
-        top: 18vh;
-        height: 78vh;
+        top: 20vh;
+        height: 76vh;
       }
       .work-cards-track {
         gap: 6vw;
@@ -3924,7 +3924,9 @@
       const track = document.querySelector('.work-cards-track');
       const cards = gsap.utils.toArray('.work-card-wrapper');
       if (track && cards.length > 0) {
-        const getScrollWidth = () => track.scrollWidth - window.innerWidth;
+        const getScrollWidth = () => {
+          return cards[cards.length - 1].offsetLeft - cards[0].offsetLeft;
+        };
 
         // Set initial card states (Card 0 active; others scaled down, faded, rotated slightly)
         cards.forEach((cardWrapper, index) => {
@@ -3991,7 +3993,7 @@
             trigger: "#work",
             start: "top top",
             end: `+=${(cards.length - 1) * 100}%`, // exactly 3 viewport heights for 4 cards (3 transitions)
-            scrub: 1.2, // momentum interpolation makes scrolling smooth and natural
+            scrub: 0.6, // momentum interpolation makes scrolling smooth and natural
             pin: true,
             anticipatePin: 1,
             invalidateOnRefresh: true
@@ -4006,7 +4008,7 @@
         // Translate the entire track
         tl.to(track, {
           x: () => -getScrollWidth(),
-          ease: "none",
+          ease: "power1.inOut",
           duration: activeDuration
         }, entryBuffer);
 
